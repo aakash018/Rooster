@@ -29,7 +29,10 @@ client.on("message", async (message) => {
             case("blessmewithmodel"):
                     blessme(COMMAND_PARAMS, pHub.searchModelInfo, message)
                     break;
-                
+            case("giveatestdrive"):
+                const gifUrl = await pHub.searchForGif(`${COMMAND_PARAMS[0]} ${COMMAND_PARAMS[1]}`.toLocaleLowerCase())
+                console.log(gifUrl)
+                message.reply(gifUrl)
             }  
     }
 })
@@ -66,7 +69,7 @@ const blessme = async (COMMAND_PARAMS, searchStarsInfo, message) => {
                     Piercings: ${StarsInfo.Piercings}
                     Fake Tittes: ${StarsInfo.FakeBoobs}
                     Joined: ${StarsInfo.Joined}
-                    Simp Viewers: ${StarsInfo.PornstarProfileViews}
+                    Views: ${StarsInfo.PornstarProfileViews}
                     Interested In: ${StarsInfo.Interestedin}
                     RelationShip Status: ${StarsInfo.Relationshipstatus}
                     `
