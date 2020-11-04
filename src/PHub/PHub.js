@@ -8,6 +8,7 @@ const nightmare = Nightmare()
 class PHub {
 
     _searchingInfo(name, type="pornstar") {
+        
         try{
             const url = `https://www.pornhub.com/${type}/${name.replace(" ", "-")}`
             console.log(url)
@@ -40,6 +41,7 @@ class PHub {
 }
 
     searchStarsInfo = async (name) => {
+        console.log(this)
         return await this._searchingInfo(name, "pornstar")
         
     }
@@ -68,6 +70,35 @@ class PHub {
             return "Jesus couldn't help you with that...:pleading_face: "
         }
     }
+
+    searchForFullVideo = async (name) => {
+        console.log("NAme" + name)
+        console.log(`https://www.pornohd.sex/search/?text=${name[0]}%20${name[1]}`)
+        return axios.get(`https://www.pornohd.sex/search/?text=${name[0]}%20${name[1]}`)
+        .then(async (res) => {
+            const $ = cheerio.load(res.data)
+           
+            const urlList = []
+
+            $("#preview .preview_screen a").each((i, el) => {
+                const eachLink = $(el).attr("href")
+                urlList.push(eachLink)
+            })
+
+            // console.log(urlList[Math.floor((Math.random())*gifPageURL.length)]
+
+            const url = urlList[Math.floor((Math.random())*urlList.length)]
+            console.log("URL" + url)
+        
+                const video = await nightmare
+                            .goto(url)
+                            .wait("#videoplayer")
+                            .evaluate(() => document.querySelector("#videoplayer video").getAttribute("src"))
+                            
+    
+                return video
+         
+})}
 }
 
 module.exports = PHub;

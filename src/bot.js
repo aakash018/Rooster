@@ -33,7 +33,17 @@ client.on("message", async (message) => {
                 const gifUrl = await pHub.searchForGif(`${COMMAND_PARAMS[0]} ${COMMAND_PARAMS[1]}`.toLocaleLowerCase())
                 console.log(gifUrl)
                 message.reply(gifUrl)
-            }  
+                break;
+
+            case("goallout"):  
+                try {
+                    const videoUrl = await pHub.searchForFullVideo(COMMAND_PARAMS)
+                    message.reply("Go full throttle BEST OF LUCKS :partying_face: ")
+                    message.reply(videoUrl)
+                } catch {
+                    message.reply("Sorry Could not help you with that :cry: ")
+                } 
+            }
     }
 })
 
