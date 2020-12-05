@@ -30,6 +30,7 @@ client.on("message", async (message) => {
                     blessme(COMMAND_PARAMS, pHub.searchModelInfo, message)
                     break;
             case("giveatestdrive"):
+            console.log(COMMAND_PARAMS)
                 const gifUrl = await pHub.searchForGif(`${COMMAND_PARAMS[0]} ${COMMAND_PARAMS[1]}`.toLocaleLowerCase())
                 console.log(gifUrl)
                 message.reply(gifUrl)

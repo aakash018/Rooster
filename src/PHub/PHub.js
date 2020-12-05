@@ -71,10 +71,9 @@ class PHub {
         }
     }
 
-    searchForFullVideo = async (name) => {
-        console.log("NAme" + name)
-        console.log(`https://www.pornohd.sex/search/?text=${name[0]}%20${name[1]}`)
-        return axios.get(`https://www.pornohd.sex/search/?text=${name[0]}%20${name[1]}`)
+    searchForFullVideo = async (params) => {
+        try {
+        return axios.get(`https://www.pornohd.sex/search/?text=${params[0]}%20${params[1]}`)
         .then(async (res) => {
             const $ = cheerio.load(res.data)
            
@@ -90,15 +89,24 @@ class PHub {
             const url = urlList[Math.floor((Math.random())*urlList.length)]
             console.log("URL" + url)
         
-                const video = await nightmare
+                let video = await nightmare
                             .goto(url)
                             .wait("#videoplayer")
                             .evaluate(() => document.querySelector("#videoplayer video").getAttribute("src"))
-                            
-    
+                
+                const videoQuality = ["720", "480", "1080"]
+                if(params[2] != null && params[2] === "-q" && videoQuality.some(q => q === params[3])){
+                    console.log(params)
+                    video = video.replace("480p", `${params[3]}p`)
+                }
                 return video
          
-})}
+})
+        }catch (e){
+            console.log(e)
+            return("Sorry could not help you with that...")
+        }
+}
 }
 
 module.exports = PHub;
